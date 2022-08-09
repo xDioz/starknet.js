@@ -9,8 +9,13 @@ describeIfRpc('RPCProvider', () => {
   });
 
   describe('RPC methods', () => {
-    test('getChainId', async () => {
+    test('getChainId()', async () => {
       const chainId = await provider.getChainId();
+      expect(chainId).toBe('0x534e5f474f45524c49');
+    });
+
+    test('provider.chainId', async () => {
+      const chainId = await provider.chainId;
       expect(chainId).toBe('0x534e5f474f45524c49');
     });
   });
