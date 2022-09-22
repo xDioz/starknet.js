@@ -20,7 +20,7 @@ const DEFAULT_TEST_ACCOUNT_PRIVATE_KEY = '0xe3e70682c2094cac629f6fbed82c07cd';
 const BASE_URL = process.env.TEST_PROVIDER_BASE_URL || DEFAULT_TEST_PROVIDER_BASE_URL;
 const RPC_URL = process.env.TEST_RPC_URL;
 
-const IS_RPC = !!RPC_URL;
+export const IS_RPC = !!RPC_URL;
 const IS_RPC_DEVNET = Boolean(
   RPC_URL && (RPC_URL.includes('localhost') || RPC_URL.includes('127.0.0.1'))
 );

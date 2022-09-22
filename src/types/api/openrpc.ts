@@ -328,7 +328,7 @@ export namespace OPENRPC {
         | Errors.INVALID_BLOCK_ID;
     };
     starknet_estimateFee: {
-      params: { request: INVOKE_TXN; block_id: BLOCK_ID };
+      params: { request: Omit<INVOKE_TXN, 'entry_point_selector'>; block_id: BLOCK_ID };
       result: FEE_ESTIMATE;
       errors:
         | Errors.CONTRACT_NOT_FOUND
@@ -373,7 +373,7 @@ export namespace OPENRPC {
     // Write API
     starknet_addInvokeTransaction: {
       params: {
-        function_invocation: FUNCTION_CALL;
+        function_invocation: Omit<FUNCTION_CALL, 'entry_point_selector'>;
         signature: SIGNATURE;
         max_fee: NUM_AS_HEX;
         version: NUM_AS_HEX;

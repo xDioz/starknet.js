@@ -3,7 +3,7 @@ import assert from 'minimalistic-assert';
 import { AccountInterface } from '../account';
 import { ProviderInterface, defaultProvider } from '../provider';
 import { Abi, CompiledContract, RawCalldata } from '../types';
-import { BigNumberish } from '../utils/number';
+import { BigNumberish, toBN, toHex } from '../utils/number';
 import { Contract } from './default';
 
 export class ContractFactory {
@@ -37,7 +37,7 @@ export class ContractFactory {
     const { contract_address, transaction_hash } = await this.providerOrAccount.deployContract({
       contract: this.compiledContract,
       constructorCalldata,
-      addressSalt,
+      addressSalt: addressSalt ? toHex(toBN(addressSalt)) : undefined, // TODO: clean this up
     });
     assert(Boolean(contract_address), 'Deployment of the contract failed');
 
