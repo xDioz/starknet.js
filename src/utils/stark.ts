@@ -66,7 +66,7 @@ export function signatureToHexArray(sig?: Signature): ArraySignatureType {
   return bigNumberishArrayToHexadecimalStringArray(formatSignature(sig));
 }
 
-export function estimatedFeeToMaxFee(estimatedFee: BigNumberish, overhead: number = 0.5): bigint {
+export function estimatedFeeToMaxFee(estimatedFee: BigNumberish, overhead: number = 1.5): bigint {
   // BN can only handle Integers, so we need to do all calulations with integers
   const overHeadPercent = Math.round((1 + overhead) * 100);
   return (toBigInt(estimatedFee) * toBigInt(overHeadPercent)) / 100n;

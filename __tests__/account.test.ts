@@ -42,7 +42,6 @@ describe('deploy and test Wallet', () => {
   const account = getTestAccount(provider);
   let erc20: Contract;
   let erc20Address: string;
-  let dapp: Contract;
   let dd: DeclareDeployUDCResponse;
 
   beforeAll(async () => {
@@ -63,13 +62,6 @@ describe('deploy and test Wallet', () => {
 
     const { balance } = await erc20.balanceOf(account.address);
     expect(BigInt(balance.low).toString()).toStrictEqual(BigInt(1000).toString());
-
-    const dappResponse = await account.declareAndDeploy({
-      contract: compiledTestDapp,
-      classHash: '0x04367b26fbb92235e8d1137d19c080e6e650a6889ded726d00658411cc1046f5',
-    });
-
-    dapp = new Contract(compiledTestDapp.abi, dappResponse.deploy.contract_address!, provider);
   });
 
   xtest('validate TS for redeclare - skip testing', async () => {
@@ -365,7 +357,17 @@ describe('deploy and test Wallet', () => {
     await provider.waitForTransaction(transaction_hash);
   });
 
-  test('execute multiple transactions', async () => {
+  test('execute multiple transactions - dapp', async () => {
+    const dappResponse = await account.declareAndDeploy({
+      contract: compiledTestDapp,
+      classHash: '0x04367b26fbb92235e8d1137d19c080e6e650a6889ded726d00658411cc1046f5',
+    });
+    const dapp = new Contract(
+      compiledTestDapp.abi,
+      dappResponse.deploy.contract_address!,
+      provider
+    );
+
     const { transaction_hash } = await account.execute([
       {
         contractAddress: dapp.address,
